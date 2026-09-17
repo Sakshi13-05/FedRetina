@@ -1,0 +1,266 @@
+/*
+ * FedRetina design system.
+ * Rose/clinical palette, light + dark mode. All colours are oklch tokens and are
+ * exposed to Tailwind via @theme inline so components only ever use semantic
+ * classes (bg-surface, text-muted, border-strong, ...) — never raw colours.
+ */
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* radii from the spec: 6 / 12 / 18 / pill */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-xl: 24px;
+
+  --font-sans: var(--font);
+  --font-mono: var(--font-mono-stack);
+
+  /* semantic surfaces + text */
+  --color-background: var(--bg-page);
+  --color-foreground: var(--text-primary);
+  --color-surface: var(--bg-surface);
+  --color-surface-2: var(--bg-surface-2);
+  --color-card: var(--bg-surface);
+  --color-card-foreground: var(--text-primary);
+  --color-popover: var(--bg-surface);
+  --color-popover-foreground: var(--text-primary);
+  --color-muted: var(--bg-surface-2);
+  --color-muted-foreground: var(--text-muted);
+  --color-secondary-text: var(--text-secondary);
+
+  /* brand */
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--text-on-primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-light: var(--primary-light);
+  --color-primary-mid: var(--primary-mid);
+  --color-accent: var(--primary-light);
+  --color-accent-foreground: var(--primary);
+  --color-secondary: var(--bg-surface-2);
+  --color-secondary-foreground: var(--text-primary);
+
+  /* status */
+  --color-success: var(--success);
+  --color-success-light: var(--success-light);
+  --color-warning: var(--warning);
+  --color-warning-light: var(--warning-light);
+  --color-danger: var(--danger);
+  --color-danger-light: var(--danger-light);
+  --color-destructive: var(--danger);
+  --color-destructive-foreground: var(--text-on-primary);
+
+  /* DR grade scale (0 -> 4) */
+  --color-grade-0: var(--success);
+  --color-grade-1: var(--grade-1);
+  --color-grade-2: var(--warning);
+  --color-grade-3: var(--grade-3);
+  --color-grade-4: var(--danger);
+
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-input: var(--bg-input);
+  --color-ring: var(--primary);
+
+  --shadow-sm: var(--shadow-sm-token);
+  --shadow-md: var(--shadow-md-token);
+  --shadow-lg: var(--shadow-lg-token);
+}
+
+:root {
+  --font: "Inter", "Segoe UI", sans-serif;
+  --font-mono-stack: "JetBrains Mono", "Fira Code", monospace;
+
+  --bg-page: oklch(0.978 0.011 3.5);
+  --bg-surface: oklch(1 0 0);
+  --bg-surface-2: oklch(0.968 0.017 3.6);
+  --bg-input: oklch(1 0 0);
+  --border: oklch(0.892 0.056 10);
+  --border-strong: oklch(0.81 0.106 11.6);
+  --primary: oklch(0.586 0.222 17.6);
+  --primary-hover: oklch(0.514 0.198 16.9);
+  --primary-light: oklch(0.941 0.03 12.6);
+  --primary-mid: oklch(0.719 0.169 13.4);
+  --success: oklch(0.627 0.17 149.2);
+  --success-light: oklch(0.962 0.043 156.7);
+  --warning: oklch(0.666 0.157 58.3);
+  --warning-light: oklch(0.962 0.058 95.6);
+  --danger: oklch(0.577 0.215 27.3);
+  --danger-light: oklch(0.936 0.031 17.7);
+  --grade-1: oklch(0.723 0.192 149.6);
+  --grade-3: oklch(0.705 0.187 47.6);
+  --text-primary: oklch(0.208 0.04 265.8);
+  --text-secondary: oklch(0.446 0.037 257.3);
+  --text-muted: oklch(0.711 0.035 256.8);
+  --text-on-primary: oklch(1 0 0);
+  --shadow-sm-token: 0 1px 3px oklch(0.586 0.222 17.6 / 0.08);
+  --shadow-md-token: 0 4px 16px oklch(0.586 0.222 17.6 / 0.12);
+  --shadow-lg-token: 0 8px 32px oklch(0.586 0.222 17.6 / 0.16);
+
+  --hero-gradient: linear-gradient(
+    135deg,
+    oklch(0.941 0.03 12.6) 0%,
+    oklch(1 0 0) 100%
+  );
+}
+
+.dark {
+  --bg-page: oklch(0.171 0.029 4.5);
+  --bg-surface: oklch(0.221 0.049 4.5);
+  --bg-surface-2: oklch(0.26 0.066 4.6);
+  --bg-input: oklch(0.221 0.049 4.5);
+  --border: oklch(0.329 0.096 11.6);
+  --border-strong: oklch(0.419 0.138 17.3);
+  --primary: oklch(0.719 0.169 13.4);
+  --primary-hover: oklch(0.645 0.215 16.4);
+  --primary-light: oklch(0.271 0.101 12.1);
+  --primary-mid: oklch(0.586 0.222 17.6);
+  --success: oklch(0.8 0.182 151.7);
+  --success-light: oklch(0.266 0.063 152.9);
+  --warning: oklch(0.879 0.153 91.6);
+  --warning-light: oklch(0.279 0.074 45.6);
+  --danger: oklch(0.711 0.166 22.2);
+  --danger-light: oklch(0.258 0.089 26);
+  --grade-1: oklch(0.8 0.182 151.7);
+  --grade-3: oklch(0.75 0.16 47.6);
+  --text-primary: oklch(0.969 0.015 12.4);
+  --text-secondary: oklch(0.892 0.056 10);
+  --text-muted: oklch(0.578 0.074 2.2);
+  --text-on-primary: oklch(0.208 0.04 265.8);
+  --shadow-sm-token: 0 1px 3px oklch(0 0 0 / 0.4);
+  --shadow-md-token: 0 4px 16px oklch(0 0 0 / 0.5);
+  --shadow-lg-token: 0 8px 32px oklch(0 0 0 / 0.6);
+
+  --hero-gradient: linear-gradient(
+    135deg,
+    oklch(0.271 0.101 12.1) 0%,
+    oklch(0.171 0.029 4.5) 100%
+  );
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    font-family: var(--font);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* Keyboard focus is always visible (accessibility requirement). */
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+}
+
+/* Uppercase micro-label used on cards and stat tiles. */
+@utility label-xs {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Soft brand gradient for hero/landing sections. */
+@utility bg-hero {
+  background-image: var(--hero-gradient);
+}
+
+/* ---------------------------------------------------------------------------
+ * Motion layer: ambient shapes, entrance reveals, marquee and pulse effects.
+ * Everything here is disabled automatically for people who prefer less motion.
+ * ------------------------------------------------------------------------- */
+
+@keyframes fr-float {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33% { transform: translate3d(30px, -40px, 0) scale(1.08); }
+  66% { transform: translate3d(-25px, 25px, 0) scale(0.95); }
+}
+@keyframes fr-drift {
+  0% { transform: translate3d(-8%, 0, 0) rotate(0deg); }
+  100% { transform: translate3d(8%, 0, 0) rotate(360deg); }
+}
+@keyframes fr-rise {
+  0% { opacity: 0; transform: translateY(18px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes fr-marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes fr-ping-ring {
+  0% { transform: scale(0.85); opacity: 0.7; }
+  100% { transform: scale(2.1); opacity: 0; }
+}
+@keyframes fr-scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(400%); }
+}
+@keyframes fr-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@utility fr-float { animation: fr-float 18s ease-in-out infinite; }
+@utility fr-drift { animation: fr-drift 40s linear infinite; }
+@utility fr-rise { animation: fr-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@utility fr-marquee { animation: fr-marquee 32s linear infinite; }
+@utility fr-ring { animation: fr-ping-ring 2.4s ease-out infinite; }
+@utility fr-scanline { animation: fr-scanline 3.2s ease-in-out infinite; }
+@utility fr-shimmer {
+  background-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--primary) 18%, transparent) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: fr-shimmer 2.4s linear infinite;
+}
+
+/* Lift-on-hover used by cards and tiles. */
+@utility fr-lift {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+}
+.fr-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md-token);
+}
+
+/* Scroll reveal: hidden until the element is marked visible. */
+.fr-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fr-reveal[data-visible="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .fr-reveal { opacity: 1; transform: none; }
+}
+
+/* Fill bar used by the rotating quote timer. */
+@keyframes fr-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
