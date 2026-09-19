@@ -1,1 +1,6 @@
 project_id = "gfbhsuujekaeffhuajwq"
+[auth.email]
+enable_signup = true
+enable_confirmations = false        
+double_confirm_changes = false
+secure_password_change = false
