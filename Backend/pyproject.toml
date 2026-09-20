@@ -1,0 +1,113 @@
+[project]
+name = "fedretina-backend"
+version = "0.1.0"
+description = "Privacy-Preserving Federated Diabetic Retinopathy Grading System — Backend API"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { text = "Proprietary" }
+authors = [{ name = "FedRetina Team" }]
+
+dependencies = [
+    # --- Web framework ---
+    "fastapi>=0.115.0,<0.116.0",
+    "uvicorn[standard]>=0.32.0,<0.33.0",
+    "python-multipart>=0.0.12,<0.1.0",           # multipart/form-data file uploads
+
+    # --- Config & validation ---
+    "pydantic>=2.9.0,<3.0.0",
+    "pydantic-settings>=2.6.0,<3.0.0",
+
+    # --- Database ---
+    "asyncpg>=0.30.0,<0.31.0",                   # async Postgres driver
+
+    # --- Supabase ---
+    "supabase>=2.10.0,<3.0.0",                   # storage + auth admin
+    "gotrue>=2.9.0,<3.0.0",                      # typed auth client
+    "httpx>=0.27.0,<0.28.0",                     # JWKS fetch
+
+    # --- Crypto ---
+    "cryptography>=43.0.0,<44.0.0",              # AES-256-GCM, HMAC
+
+    # --- JWT verification ---
+    "pyjwt[crypto]>=2.9.0,<3.0.0",
+
+    # --- Utilities ---
+    "python-json-logger>=2.0.7,<3.0.0",
+    "orjson>=3.10.0,<4.0.0",                     # fast JSON
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0,<9.0.0",
+    "pytest-asyncio>=0.24.0,<0.25.0",
+    "pytest-cov>=6.0.0,<7.0.0",
+    "httpx>=0.27.0,<0.28.0",                     # FastAPI TestClient
+    "ruff>=0.7.0,<0.8.0",
+    "mypy>=1.13.0,<2.0.0",
+    "types-python-jose>=3.3.4,<4.0.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fedretina"]
+
+# ============================================================================
+# Ruff — linter + formatter
+# ============================================================================
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E", "W",      # pycodestyle
+    "F",           # pyflakes
+    "I",           # isort
+    "N",           # pep8-naming
+    "UP",          # pyupgrade
+    "B",           # bugbear
+    "A",           # builtin shadowing
+    "C4",          # comprehensions
+    "DTZ",         # datetime timezone
+    "T20",         # no print
+    "SIM",         # simplify
+    "RUF",         # ruff-specific
+    "S",           # bandit (security)
+]
+ignore = [
+    "S101",        # assert allowed in tests via per-file-ignores below
+    "B008",        # FastAPI Depends() in default args is idiomatic
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101", "T20"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["fedretina"]
+
+# ============================================================================
+# mypy — strict typing
+# ============================================================================
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_unreachable = true
+warn_unused_ignores = true
+show_error_codes = true
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = ["asyncpg.*", "supabase.*", "gotrue.*", "jwt.*"]
+ignore_missing_imports = true
+
+# ============================================================================
+# pytest
+# ============================================================================
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+addopts = "-v --cov=src/fedretina --cov-report=term-missing --cov-fail-under=70"
