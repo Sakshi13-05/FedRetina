@@ -87,27 +87,9 @@ ALTER TABLE public.audit_logs
         OR client_ip ~ '^[0-9a-fA-F:]{2,45}$'
     );
 
--- Concern 2 fix: metadata key whitelist (prevents PHI exfiltration)
-ALTER TABLE public.audit_logs
-    DROP CONSTRAINT IF EXISTS audit_metadata_keys_whitelist;
-ALTER TABLE public.audit_logs
-    ADD CONSTRAINT audit_metadata_keys_whitelist
-    CHECK (
-        metadata = '{}'::jsonb
-        OR metadata <@ '{
-            "model_version": null,
-            "fl_round": null,
-            "dp_epsilon": null,
-            "dp_delta": null,
-            "inference_duration_ms": null,
-            "predicted_grade": null,
-            "uncertainty_score": null,
-            "gradcam_path": null,
-            "error_code": null,
-            "reason": null,
-            "event_subtype": null
-        }'::jsonb
-    );
+-- Metadata whitelist is enforced by validate_audit_metadata_keys() trigger,
+-- created in 202609200929_audit_metadata_whitelist.sql.
+-- (The `<@` CHECK approach was semantically incorrect and was removed.)
 
 -- ----------------------------------------------------------------------------
 -- 4. Immutability enforcement (append-only)
