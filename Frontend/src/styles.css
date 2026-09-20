@@ -182,41 +182,88 @@
  * ------------------------------------------------------------------------- */
 
 @keyframes fr-float {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-  33% { transform: translate3d(30px, -40px, 0) scale(1.08); }
-  66% { transform: translate3d(-25px, 25px, 0) scale(0.95); }
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(30px, -40px, 0) scale(1.08);
+  }
+  66% {
+    transform: translate3d(-25px, 25px, 0) scale(0.95);
+  }
 }
 @keyframes fr-drift {
-  0% { transform: translate3d(-8%, 0, 0) rotate(0deg); }
-  100% { transform: translate3d(8%, 0, 0) rotate(360deg); }
+  0% {
+    transform: translate3d(-8%, 0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(8%, 0, 0) rotate(360deg);
+  }
 }
 @keyframes fr-rise {
-  0% { opacity: 0; transform: translateY(18px); }
-  100% { opacity: 1; transform: translateY(0); }
+  0% {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 @keyframes fr-marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 @keyframes fr-ping-ring {
-  0% { transform: scale(0.85); opacity: 0.7; }
-  100% { transform: scale(2.1); opacity: 0; }
+  0% {
+    transform: scale(0.85);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.1);
+    opacity: 0;
+  }
 }
 @keyframes fr-scanline {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(400%); }
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(400%);
+  }
 }
 @keyframes fr-shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
-@utility fr-float { animation: fr-float 18s ease-in-out infinite; }
-@utility fr-drift { animation: fr-drift 40s linear infinite; }
-@utility fr-rise { animation: fr-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
-@utility fr-marquee { animation: fr-marquee 32s linear infinite; }
-@utility fr-ring { animation: fr-ping-ring 2.4s ease-out infinite; }
-@utility fr-scanline { animation: fr-scanline 3.2s ease-in-out infinite; }
+@utility fr-float {
+  animation: fr-float 18s ease-in-out infinite;
+}
+@utility fr-drift {
+  animation: fr-drift 40s linear infinite;
+}
+@utility fr-rise {
+  animation: fr-rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@utility fr-marquee {
+  animation: fr-marquee 32s linear infinite;
+}
+@utility fr-ring {
+  animation: fr-ping-ring 2.4s ease-out infinite;
+}
+@utility fr-scanline {
+  animation: fr-scanline 3.2s ease-in-out infinite;
+}
 @utility fr-shimmer {
   background-image: linear-gradient(
     90deg,
@@ -230,7 +277,9 @@
 
 /* Lift-on-hover used by cards and tiles. */
 @utility fr-lift {
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease;
 }
 .fr-lift:hover {
   transform: translateY(-4px);
@@ -241,7 +290,9 @@
 .fr-reveal {
   opacity: 0;
   transform: translateY(22px);
-  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
 }
 .fr-reveal[data-visible="true"] {
   opacity: 1;
@@ -256,11 +307,18 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
-  .fr-reveal { opacity: 1; transform: none; }
+  .fr-reveal {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* Fill bar used by the rotating quote timer. */
 @keyframes fr-fill {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
 }

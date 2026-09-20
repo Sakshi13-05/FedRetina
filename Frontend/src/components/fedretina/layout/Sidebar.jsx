@@ -46,7 +46,9 @@ export function Sidebar({ profile, theme, onToggleTheme, onSignOut }) {
             key={to}
             to={to}
             className={linkClass}
-            activeProps={{ className: "border-primary bg-primary-light text-primary" }}
+            activeProps={{
+              className: "border-primary bg-primary-light text-primary",
+            }}
           >
             <Icon size={18} aria-hidden />
             {label}
@@ -57,7 +59,9 @@ export function Sidebar({ profile, theme, onToggleTheme, onSignOut }) {
           <Link
             to="/admin"
             className={linkClass}
-            activeProps={{ className: "border-primary bg-primary-light text-primary" }}
+            activeProps={{
+              className: "border-primary bg-primary-light text-primary",
+            }}
           >
             <ShieldCheck size={18} aria-hidden />
             Admin
@@ -87,10 +91,16 @@ export function Sidebar({ profile, theme, onToggleTheme, onSignOut }) {
           <button
             type="button"
             onClick={onToggleTheme}
-            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            aria-label={
+              theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+            }
             className="flex size-11 items-center justify-center rounded-md border border-border bg-surface text-secondary-text transition-colors hover:bg-primary-light hover:text-primary"
           >
-            {theme === "dark" ? <Sun size={18} aria-hidden /> : <Moon size={18} aria-hidden />}
+            {theme === "dark" ? (
+              <Sun size={18} aria-hidden />
+            ) : (
+              <Moon size={18} aria-hidden />
+            )}
           </button>
           <button
             type="button"

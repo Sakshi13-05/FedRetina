@@ -3,7 +3,7 @@
 let lastCapturedError;
 const TTL_MS = 5_000;
 function record(error) {
-    lastCapturedError = { error, at: Date.now() };
+  lastCapturedError = { error, at: Date.now() };
 }
 // h3's HTTPError serializes to {"status":500,"unhandled":true,"message":"HTTPError"} —
 // no stack, no cause — so a plain console.error(error) reaches the log pipeline with
@@ -12,61 +12,64 @@ function record(error) {
 const CAUSE_DEPTH_LIMIT = 5;
 const DESCRIPTION_LENGTH_LIMIT = 8_000;
 export function describeError(error) {
-    const parts = [];
-    let current = error;
-    for (let depth = 0; depth < CAUSE_DEPTH_LIMIT && current != null; depth++) {
-        if (!(current instanceof Error)) {
-            parts.push(typeof current === "string" ? current : safeStringify(current));
-            break;
-        }
-        const label = depth === 0 ? "" : "caused by: ";
-        const status = describeStatus(current);
-        parts.push(`${label}${current.stack ?? `${current.name}: ${current.message}`}${status}`);
-        current = current.cause;
+  const parts = [];
+  let current = error;
+  for (let depth = 0; depth < CAUSE_DEPTH_LIMIT && current != null; depth++) {
+    if (!(current instanceof Error)) {
+      parts.push(
+        typeof current === "string" ? current : safeStringify(current),
+      );
+      break;
     }
-    return parts.join("\n").slice(0, DESCRIPTION_LENGTH_LIMIT);
+    const label = depth === 0 ? "" : "caused by: ";
+    const status = describeStatus(current);
+    parts.push(
+      `${label}${current.stack ?? `${current.name}: ${current.message}`}${status}`,
+    );
+    current = current.cause;
+  }
+  return parts.join("\n").slice(0, DESCRIPTION_LENGTH_LIMIT);
 }
 function describeStatus(error) {
-    const { status, statusCode } = error;
-    const value = status ?? statusCode;
-    return typeof value === "number" ? ` (status ${value})` : "";
+  const { status, statusCode } = error;
+  const value = status ?? statusCode;
+  return typeof value === "number" ? ` (status ${value})` : "";
 }
 function safeStringify(value) {
-    try {
-        return JSON.stringify(value) ?? String(value);
-    }
-    catch {
-        return String(value);
-    }
+  try {
+    return JSON.stringify(value) ?? String(value);
+  } catch {
+    return String(value);
+  }
 }
 function isErrorLike(value) {
-    return value instanceof Error;
+  return value instanceof Error;
 }
 // Wrap console.error so errors logged by any layer — including h3's internal
 // unhandled-error logging, which this file cannot hook directly — are both
 // recorded for consumeLastCapturedError and expanded before serialization.
 const originalConsoleError = console.error.bind(console);
 console.error = (...args) => {
-    const expanded = args.map((arg) => {
-        if (!isErrorLike(arg))
-            return arg;
-        record(arg);
-        return describeError(arg);
-    });
-    originalConsoleError(...expanded);
+  const expanded = args.map((arg) => {
+    if (!isErrorLike(arg)) return arg;
+    record(arg);
+    return describeError(arg);
+  });
+  originalConsoleError(...expanded);
 };
 if (typeof globalThis.addEventListener === "function") {
-    globalThis.addEventListener("error", (event) => record(event.error ?? event));
-    globalThis.addEventListener("unhandledrejection", (event) => record(event.reason));
+  globalThis.addEventListener("error", (event) => record(event.error ?? event));
+  globalThis.addEventListener("unhandledrejection", (event) =>
+    record(event.reason),
+  );
 }
 export function consumeLastCapturedError() {
-    if (!lastCapturedError)
-        return undefined;
-    if (Date.now() - lastCapturedError.at > TTL_MS) {
-        lastCapturedError = undefined;
-        return undefined;
-    }
-    const { error } = lastCapturedError;
+  if (!lastCapturedError) return undefined;
+  if (Date.now() - lastCapturedError.at > TTL_MS) {
     lastCapturedError = undefined;
-    return error;
+    return undefined;
+  }
+  const { error } = lastCapturedError;
+  lastCapturedError = undefined;
+  return error;
 }

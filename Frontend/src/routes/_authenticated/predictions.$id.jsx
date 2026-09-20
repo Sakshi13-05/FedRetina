@@ -22,9 +22,15 @@ export const Route = createFileRoute("/_authenticated/predictions/$id")({
   head: () => ({
     meta: [
       { title: "Scan result — FedRetina" },
-      { name: "description", content: "Full detail for a single graded retina scan." },
+      {
+        name: "description",
+        content: "Full detail for a single graded retina scan.",
+      },
       { property: "og:title", content: "Scan result — FedRetina" },
-      { property: "og:description", content: "Full detail for a single graded retina scan." },
+      {
+        property: "og:description",
+        content: "Full detail for a single graded retina scan.",
+      },
     ],
   }),
   component: PredictionDetailPage,
@@ -47,8 +53,14 @@ function PredictionDetailPage() {
   if (!prediction) {
     return (
       <AppShell>
-        <PageHeader title="Scan not found" description="This scan is not in your site's records." />
-        <Link to="/history" className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary">
+        <PageHeader
+          title="Scan not found"
+          description="This scan is not in your site's records."
+        />
+        <Link
+          to="/history"
+          className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-primary"
+        >
           <ArrowLeft size={16} aria-hidden />
           Back to history
         </Link>
@@ -76,7 +88,9 @@ function PredictionDetailPage() {
           action={
             <span
               className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                reviewed ? "bg-success-light text-success" : "bg-warning-light text-warning"
+                reviewed
+                  ? "bg-success-light text-success"
+                  : "bg-warning-light text-warning"
               }`}
             >
               {reviewed ? "Reviewed" : "Needs review"}
@@ -88,10 +102,14 @@ function PredictionDetailPage() {
       <div className="mt-8 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
         <Reveal className="rounded-lg border border-border bg-surface p-6 shadow-sm">
           <span className="label-xs">Reading</span>
-          <p className={`mt-2 text-4xl font-bold tracking-tight ${GRADE_COLOR_CLASS[prediction.grade]}`}>
+          <p
+            className={`mt-2 text-4xl font-bold tracking-tight ${GRADE_COLOR_CLASS[prediction.grade]}`}
+          >
             Grade {prediction.grade} · {GRADE_LABELS[prediction.grade]}
           </p>
-          <p className="mt-2 text-sm text-secondary-text">{NEXT_STEPS[prediction.grade]}</p>
+          <p className="mt-2 text-sm text-secondary-text">
+            {NEXT_STEPS[prediction.grade]}
+          </p>
 
           {prediction.uncertaintyFlag && (
             <p className="mt-4 inline-flex items-center gap-2 rounded-md bg-warning-light px-3 py-2 text-sm font-medium text-warning">
@@ -100,11 +118,15 @@ function PredictionDetailPage() {
             </p>
           )}
 
-          <h2 className="mt-7 text-sm font-semibold text-foreground">How the reading was spread</h2>
+          <h2 className="mt-7 text-sm font-semibold text-foreground">
+            How the reading was spread
+          </h2>
           <div className="mt-3 space-y-2">
             {bars.map((row) => (
               <div key={row.grade} className="flex items-center gap-3 text-xs">
-                <span className="w-20 shrink-0 text-muted-foreground">{row.label}</span>
+                <span className="w-20 shrink-0 text-muted-foreground">
+                  {row.label}
+                </span>
                 <span className="h-2 flex-1 overflow-hidden rounded-full bg-surface-2">
                   <span
                     className="block h-full rounded-full bg-primary transition-[width] duration-700"
@@ -123,11 +145,15 @@ function PredictionDetailPage() {
           <div className="grid grid-cols-2 gap-4">
             <div className="fr-lift rounded-md border border-border bg-surface p-4 shadow-sm">
               <span className="label-xs">Certainty</span>
-              <p className="mt-2 text-2xl font-bold text-foreground">{Math.round(prediction.confidence * 100)}%</p>
+              <p className="mt-2 text-2xl font-bold text-foreground">
+                {Math.round(prediction.confidence * 100)}%
+              </p>
             </div>
             <div className="fr-lift rounded-md border border-border bg-surface p-4 shadow-sm">
               <span className="label-xs">Spread</span>
-              <p className="mt-2 text-2xl font-bold text-foreground">{prediction.uncertaintyScore.toFixed(3)}</p>
+              <p className="mt-2 text-2xl font-bold text-foreground">
+                {prediction.uncertaintyScore.toFixed(3)}
+              </p>
             </div>
           </div>
 

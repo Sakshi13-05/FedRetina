@@ -43,9 +43,18 @@ const SITES = [
 ];
 
 const NOTES = [
-  { text: "We see the urgent cases first now, instead of at the end of the list.", source: "Screening lead, Riverbank General" },
-  { text: "Nothing leaves our building, so approval took days rather than months.", source: "Data officer, Harbour Clinic" },
-  { text: "The plain summary means I can explain the result to the patient there and then.", source: "Optometrist, Lakeview" },
+  {
+    text: "We see the urgent cases first now, instead of at the end of the list.",
+    source: "Screening lead, Riverbank General",
+  },
+  {
+    text: "Nothing leaves our building, so approval took days rather than months.",
+    source: "Data officer, Harbour Clinic",
+  },
+  {
+    text: "The plain summary means I can explain the result to the patient there and then.",
+    source: "Optometrist, Lakeview",
+  },
 ];
 
 const STATS = [
@@ -74,14 +83,24 @@ function Landing() {
           <span className="fr-rise inline-flex items-center gap-2 rounded-full bg-primary-light px-3 py-1 text-xs font-semibold text-primary">
             <LivePulse label="Privacy-first screening" tone="primary" />
           </span>
-          <h1 className="fr-rise mt-5 text-4xl font-bold tracking-tight text-foreground sm:text-5xl" style={{ animationDelay: "80ms" }}>
+          <h1
+            className="fr-rise mt-5 text-4xl font-bold tracking-tight text-foreground sm:text-5xl"
+            style={{ animationDelay: "80ms" }}
+          >
             Spot diabetic eye disease earlier, without moving patient data
           </h1>
-          <p className="fr-rise mx-auto mt-5 max-w-2xl text-lg text-secondary-text" style={{ animationDelay: "160ms" }}>
-            FedRetina reviews retina photos at the bedside and flags the cases that need a specialist
-            today — while every image stays inside your own hospital.
+          <p
+            className="fr-rise mx-auto mt-5 max-w-2xl text-lg text-secondary-text"
+            style={{ animationDelay: "160ms" }}
+          >
+            FedRetina reviews retina photos at the bedside and flags the cases
+            that need a specialist today — while every image stays inside your
+            own hospital.
           </p>
-          <div className="fr-rise mt-8 flex flex-wrap justify-center gap-3" style={{ animationDelay: "240ms" }}>
+          <div
+            className="fr-rise mt-8 flex flex-wrap justify-center gap-3"
+            style={{ animationDelay: "240ms" }}
+          >
             <Link
               to="/auth"
               className="inline-flex min-h-12 items-center rounded-md bg-primary px-6 text-sm font-semibold text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:bg-primary-hover hover:shadow-lg"
@@ -97,9 +116,16 @@ function Landing() {
           </div>
 
           {/* Animated scanning eye */}
-          <div className="fr-rise relative mx-auto mt-14 flex size-44 items-center justify-center" style={{ animationDelay: "320ms" }} aria-hidden>
+          <div
+            className="fr-rise relative mx-auto mt-14 flex size-44 items-center justify-center"
+            style={{ animationDelay: "320ms" }}
+            aria-hidden
+          >
             <span className="fr-ring absolute size-32 rounded-full border-2 border-primary" />
-            <span className="fr-ring absolute size-32 rounded-full border-2 border-primary" style={{ animationDelay: "1.2s" }} />
+            <span
+              className="fr-ring absolute size-32 rounded-full border-2 border-primary"
+              style={{ animationDelay: "1.2s" }}
+            />
             <span className="relative flex size-32 items-center justify-center overflow-hidden rounded-full border border-border bg-surface shadow-md">
               <Eye size={44} className="text-primary" />
               <span className="fr-scanline absolute inset-x-0 h-6 bg-primary/25 blur-[2px]" />
@@ -108,7 +134,10 @@ function Landing() {
         </section>
 
         {/* Ticker */}
-        <section className="relative overflow-hidden border-y border-border bg-surface-2 py-3" aria-hidden>
+        <section
+          className="relative overflow-hidden border-y border-border bg-surface-2 py-3"
+          aria-hidden
+        >
           <div className="fr-marquee flex w-max gap-10 whitespace-nowrap text-sm font-medium text-muted-foreground">
             {[...SITES, ...SITES].map((site, i) => (
               <span key={`${site}-${i}`} className="flex items-center gap-2">
@@ -127,7 +156,9 @@ function Landing() {
                 <p className="text-3xl font-bold tracking-tight text-primary">
                   <CountUp value={stat.value} suffix={stat.suffix} />
                 </p>
-                <p className="mt-1 text-sm text-muted-foreground">{stat.label}</p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {stat.label}
+                </p>
               </div>
             </Reveal>
           ))}
@@ -143,7 +174,9 @@ function Landing() {
                   <span className="inline-flex size-10 items-center justify-center rounded-md bg-primary-light text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
                     <Icon size={20} aria-hidden />
                   </span>
-                  <h2 className="mt-4 text-base font-semibold text-foreground">{title}</h2>
+                  <h2 className="mt-4 text-base font-semibold text-foreground">
+                    {title}
+                  </h2>
                   <p className="mt-2 text-sm text-muted-foreground">{body}</p>
                 </article>
               </Reveal>
@@ -160,7 +193,8 @@ function Landing() {
       </main>
 
       <footer className="border-t border-border py-8 text-center text-sm text-muted-foreground">
-        FedRetina — a screening aid. Clinical decisions always rest with the care team.
+        FedRetina — a screening aid. Clinical decisions always rest with the
+        care team.
       </footer>
     </div>
   );
@@ -172,12 +206,17 @@ export const Route = createFileRoute("/")({
       { title: "FedRetina — Private retina screening for diabetes care" },
       {
         name: "description",
-        content: "FedRetina helps eye teams grade diabetic retina scans in seconds, with patient images never leaving the hospital.",
+        content:
+          "FedRetina helps eye teams grade diabetic retina scans in seconds, with patient images never leaving the hospital.",
       },
-      { property: "og:title", content: "FedRetina — Private retina screening for diabetes care" },
+      {
+        property: "og:title",
+        content: "FedRetina — Private retina screening for diabetes care",
+      },
       {
         property: "og:description",
-        content: "Grade diabetic retina scans in seconds, with patient images never leaving the hospital.",
+        content:
+          "Grade diabetic retina scans in seconds, with patient images never leaving the hospital.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
