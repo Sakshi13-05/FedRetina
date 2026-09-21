@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fedretina-backend
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      # Hot-reload in dev: mount source so edits are picked up
+      - ./src:/app/src:ro
+    command: >
+      uvicorn fedretina.main:app
+        --host 0.0.0.0
+        --port 8000
+        --reload
+    healthcheck:
+      test: [ "CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/ready')" ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 15s
+    restart: unless-stopped
+  # ---------------------------------------------------------------------------
+  # Optional: local Supabase stack (comment out if using cloud project)
+  # ---------------------------------------------------------------------------
+  # supabase-db:
+  #   image: supabase/postgres:15.6.1.139
+  #   container_name: fedretina-supabase-db
+  #   ports:
+  #     - "54322:5432"
+  #   environment:
+  #     POSTGRES_PASSWORD: postgres
+  #   volumes:
+  #     - supabase-data:/var/lib/postgresql/data
+
+  # volumes:
+  #   supabase-data:
