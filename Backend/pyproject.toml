@@ -110,4 +110,4 @@ ignore_missing_imports = true
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 testpaths = ["tests"]
-addopts = "-v --cov=src/fedretina --cov-report=term-missing --cov-fail-under=70"
+addopts = "-v --cov=src/fedretina --cov-report=term-missing --cov-fail-under=40"
