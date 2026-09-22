@@ -35,7 +35,23 @@ class _ContextFilter(logging.Filter):
     )
 
     def filter(self, record: logging.LogRecord) -> bool:
-        for key in self._CONTEXT_KEYS:
+        from fedretina.api.context import (
+            get_actor_email,
+            get_actor_id,
+            get_hospital_node,
+        )
+        from fedretina.middleware.request_id import get_request_id
+
+        if not hasattr(record, "request_id"):
+            record.request_id = get_request_id()  # type: ignore[attr-defined]
+        if not hasattr(record, "actor_id"):
+            record.actor_id = get_actor_id()  # type: ignore[attr-defined]
+        if not hasattr(record, "actor_email"):
+            record.actor_email = get_actor_email()  # type: ignore[attr-defined]
+        if not hasattr(record, "hospital_node"):
+            record.hospital_node = get_hospital_node()  # type: ignore[attr-defined]
+
+        for key in ("client_ip", "http_method", "http_path", "http_status"):
             if not hasattr(record, key):
                 setattr(record, key, None)
         return True
