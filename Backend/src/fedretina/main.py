@@ -18,6 +18,7 @@ from contextlib import asynccontextmanager
 from typing import AsyncIterator
 from fedretina.api.v1.router import api_v1_router
 from fedretina.security.jwt import close_jwks_cache
+from fedretina.security.storage import close_storage, init_storage
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -59,11 +60,16 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     await init_pool()
     log.info("startup.db_pool_ready")
 
+    init_storage()
+    log.info("startup.storage_ready")
+
     try:
         yield
     finally:
         await close_jwks_cache()
         log.info("shutdown.jwks_cache_closed")
+        close_storage()
+        log.info("shutdown.storage_closed")
         await close_pool()
         log.info("shutdown.db_pool_closed")
         log.info("shutdown.complete")
